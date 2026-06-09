@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#11100f">
+    <meta name="description" content="A personal apology letter.">
+    <title>I’m Sorry, Baby</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --paper: rgba(255, 249, 239, 0.9);
+        --paper-strong: #fffaf2;
+        --ink: #1d1512;
+        --muted: #7a6258;
+        --warm: #d9a56e;
+        --shadow: rgba(10, 7, 6, 0.46);
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        min-height: 100%;
+        margin: 0;
+      }
+
+      body {
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #11100f;
+        color: var(--paper-strong);
+      }
+
+      .page {
+        position: relative;
+        min-height: 100vh;
+        min-height: 100svh;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        isolation: isolate;
+        padding: max(22px, env(safe-area-inset-top)) 16px max(22px, env(safe-area-inset-bottom));
+      }
+
+      .background {
+        position: absolute;
+        inset: 0;
+        z-index: -3;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.03);
+      }
+
+      .shade {
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background:
+          radial-gradient(circle at 50% 28%, rgba(18, 13, 10, 0.04), rgba(18, 13, 10, 0.3) 58%, rgba(12, 9, 8, 0.58)),
+          linear-gradient(180deg, rgba(12, 9, 8, 0.04), rgba(12, 9, 8, 0.38));
+      }
+
+      .letter {
+        width: min(650px, 100%);
+        padding: clamp(24px, 7vw, 48px);
+        border: 1px solid rgba(255, 250, 242, 0.2);
+        border-radius: 8px;
+        background: linear-gradient(180deg, rgba(255, 250, 242, 0.34), rgba(255, 243, 226, 0.22));
+        box-shadow: 0 22px 70px rgba(10, 7, 6, 0.34);
+        color: var(--ink);
+        backdrop-filter: blur(2px);
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.7rem, 13vw, 5.6rem);
+        font-weight: 400;
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      .intro {
+        margin: 20px 0 0;
+        color: var(--muted);
+        font-size: clamp(1rem, 4.2vw, 1.16rem);
+        line-height: 1.6;
+      }
+
+      .note {
+        margin: 26px 0 0;
+        padding: 22px 0 0;
+        border-top: 1px solid rgba(43, 33, 29, 0.16);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.14rem, 4.8vw, 1.42rem);
+        line-height: 1.7;
+      }
+
+      .note p {
+        margin: 0 0 18px;
+      }
+
+      .note p:last-child {
+        margin-bottom: 0;
+      }
+
+      .signature {
+        margin: 28px 0 0;
+        color: #8a4f42;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.3rem, 6vw, 1.9rem);
+        font-style: italic;
+      }
+
+
+      .spotify-player {
+        margin-top: 24px;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 14px 32px rgba(47, 36, 32, 0.18);
+      }
+
+      .spotify-player iframe {
+        display: block;
+        width: 100%;
+        height: 80px;
+        border: 0;
+      }
+
+      .hint {
+        margin: 22px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.45;
+      }
+
+      .open-button {
+        width: 100%;
+        min-height: 50px;
+        margin-top: 24px;
+        border: 0;
+        border-radius: 8px;
+        background: #2f2420;
+        color: #fffaf2;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 12px 28px rgba(47, 36, 32, 0.2);
+      }
+
+      .open-button:active {
+        transform: translateY(1px);
+      }
+
+      .hidden-note {
+        display: none;
+      }
+
+      .letter.is-open .hidden-note {
+        display: block;
+        animation: reveal 420ms ease both;
+      }
+
+      .letter.is-open .open-button {
+        display: none;
+      }
+
+      @keyframes reveal {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (max-width: 430px) {
+        .page {
+          align-items: center;
+          padding: max(16px, env(safe-area-inset-top)) 14px max(16px, env(safe-area-inset-bottom));
+        }
+
+        .letter {
+          max-height: calc(100svh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 1ms !important;
+          transition-duration: 1ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <img class="background" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDE2MDAgOTAwIj48ZGVmcz48ZmlsdGVyIGlkPSJzb2Z0IiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxOCIvPjwvZmlsdGVyPjxmaWx0ZXIgaWQ9InNoYWRvdyI+PGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjE4IiBzdGREZXZpYXRpb249IjE4IiBmbG9vZC1jb2xvcj0iIzAwMCIgZmxvb2Qtb3BhY2l0eT0iMC4zNSIvPjwvZmlsdGVyPjwvZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB4Mj0iMSIgeTE9IjAiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjMWMxNzE1Ii8+PHN0b3Agb2Zmc2V0PSIwLjUyIiBzdG9wLWNvbG9yPSIjNjI0NDM2Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMTMwZjBkIi8+PC9saW5lYXJHcmFkaWVudD48cmVjdCB3aWR0aD0iMTYwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIzNDAiIGN5PSIxODAiIHI9IjI4MCIgZmlsbD0iI2UyYjA3NCIgb3BhY2l0eT0iMC4yOCIgZmlsdGVyPSJ1cmwoI3NvZnQpIi8+PGNpcmNsZSBjeD0iMTI1MCIgY3k9IjY4MCIgcj0iMjUwIiBmaWxsPSIjN2UyZjM1IiBvcGFjaXR5PSIwLjMyIiBmaWx0ZXI9InVybCgjc29mdCkiLz48cmVjdCB4PSI0MjAiIHk9IjIzMCIgd2lkdGg9Ijc2MCIgaGVpZ2h0PSI1MTAiIHJ4PSIyMiIgZmlsbD0iI2Y3ZWFkNyIgb3BhY2l0eT0iMC45MiIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiIHRyYW5zZm9ybT0icm90YXRlKC0zIDgwMCA0NTUpIi8+PGcgb3BhY2l0eT0iMC4yMiIgc3Ryb2tlPSIjNWE0NDNhIiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGxpbmUgeDE9IjUyMCIgeTE9IjM1NSIgeDI9IjEwMzAiIHkyPSIzNTUiLz48bGluZSB4MT0iNTAwIiB5MT0iNDM1IiB4Mj0iMTA4MCIgeTI9IjQzNSIvPjxsaW5lIHgxPSI1NDAiIHkxPSI1MTUiIHgyPSIxMDEwIiB5Mj0iNTE1Ii8+PGxpbmUgeDE9IjUwMCIgeTE9IjU5NSIgeDI9IjkxMCIgeTI9IjU5NSIvPjwvZz48cmVjdCB4PSI5MzAiIHk9IjM1NSIgd2lkdGg9IjI0NSIgaGVpZ2h0PSIzOTAiIHJ4PSIzOCIgZmlsbD0iIzE1MTUxNSIgZmlsdGVyPSJ1cmwoI3NoYWRvdykiIHRyYW5zZm9ybT0icm90YXRlKDEyIDEwNTAgNTUwKSIvPjxyZWN0IHg9Ijk1MCIgeT0iMzkwIiB3aWR0aD0iMjA1IiBoZWlnaHQ9IjMxOCIgcng9IjI0IiBmaWxsPSIjMjgyODI5IiB0cmFuc2Zvcm09InJvdGF0ZSgxMiAxMDUwIDU1MCkiLz48Y2lyY2xlIGN4PSIxMDUzIiBjeT0iNjk2IiByPSIxMyIgZmlsbD0iIzBiMGIwYiIvPjxwYXRoIGQ9Ik01MTAgNjkwIEM2MjAgNjI1IDcyMCA2NTAgODUwIDYxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzg1MTNjIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48Y2lyY2xlIGN4PSI1MTAiIGN5PSI2ODIiIHI9IjQyIiBmaWxsPSIjN2QxZjJhIi8+PGNpcmNsZSBjeD0iNTQ4IiBjeT0iNjY0IiByPSIzOCIgZmlsbD0iI2EyMzIzZCIvPjxjaXJjbGUgY3g9IjUzNSIgY3k9IjcxMCIgcj0iMzYiIGZpbGw9IiM1NDE4MjEiLz48Y2lyY2xlIGN4PSI1ODUiIGN5PSI2OTAiIHI9IjI2IiBmaWxsPSIjYzY1YjYyIi8+PC9zdmc+" alt="">
+      <div class="shade" aria-hidden="true"></div>
+
+      <article class="letter" id="letter">
+        <p class="eyebrow">A letter from my heart</p>
+        <h1>I’m Sorry, Baby</h1>
+        <p class="intro">
+          I made this little page because you deserve more than a quick message.
+        </p>
+
+        <button class="open-button" type="button" id="openButton">Open my apology</button>
+
+        <div class="hidden-note">
+          <section class="note" aria-label="Apology note">
+            <p>Baby, I don’t even know how to start this without sounding like this was all made-up, but I’ve been thinking about everything heavy since I found out what really went down. I know I messed up, and I feel like really bad bout it. You’re my home boy, my guy, my baby, the one I rock with every day in this school madness and all, and the last thing I ever wanted was to make you feel like I wasn’t there when you needed me. So let me just put it all out there straight, no cap.</p>
+            <p>That day I saw you in class, I noticed you were kinda off, but I swear I thought it was just one of those times you go ghost mode to reflect and clear your head. You do that sometimes, you know? I’ve seen it before, so I didn’t want to crowd you or come off like I was forcing vibes. I figured if you needed me, you’d pull up or hit me later like always. I didn’t go over to you because I genuinely thought you were good, just in your zone. I had no clue your phone was spoiled. None at all.</p>
+            <p>It wasn’t until later when I heard what happened that everything clicked, and baby… my heart dropped. Like damn, my baby was dealing with that stress and I wasn’t even checking on him. I can only imagine how it looked from your side you probably felt like I saw you struggling and just walked past like it was nothing. That’s not me, baby. That’s never been me with you. You know how we move: we’ve been through late-night talks, hyped each other up before tests, even covered for each other when one of us was slacking or sleeping...I do that most times. You’re the one I call when I get really down, and I hate that in this moment I wasn’t that person for you.</p>
+            <p>I’m really sorry, baby. For real. Not the fake sorry that people throw around just to move past it this one sits deep. I should’ve hit you up some other way even if I thought you were reflecting. I could’ve found you after class, asked what’s good, or even just sent a quick message through someone else. But I didn’t, and I don't want this to sound like I'm defending myself I just didn't want to sound like I was obsessed with you and all buh that’s on me. I let my assumption get in the way, and it left you feeling abandoned at a time when your phone spoiling probably already had you frustrated with everything. School stress plus no phone plus your girl not reaching out? Tho you said you were fine......That’s a bad combo, and I added to it without knowing. I own that.</p>
+            <p>You mean a lot to me, baby. We’ve built something solid the kind of friendship where we can abuse each other one minute and have each other’s backs the next. I don’t take that for granted. I’ve been replaying that day in my head, wishing I could rewind and just walk up like normal. “Wassup baby, are you cool?&quot; Simple as that. But I can’t change it, so I’m here now trying to fix it the best way I know how by being honest and telling you I see how my action hurt.(Tho ion know how much you're hurt )</p>
+            <p>I get why you’re offended. I’d be mad too if our roles were reversed. If I was going through it and you didn’t check on me, I’d feel some type of way for sure. That’s why I’m not even trying to defend myself too hard. I just want you to know my heart wasn’t in a cold place. It was a genuine mix-up fr, but the result was still messed up. I value you more than that, and I want to show it better going forward.</p>
+            <p>Can we scratch this? I’m ready to make it right however you need. Just know I’m here, and I’m not going anywhere. You’re my home boy for real, and I got you moving forward. No more assumptions on my end. I’ll check on you even if it seems like you’re just reflecting, because that’s what we normally do.</p>
+            <p>Love you baby</p>
+          </section>
+
+          <p class="signature">With love</p>
+
+          <div class="spotify-player" aria-label="Spotify song player">
+            <iframe
+              title="Apology song on Spotify"
+              src="https://open.spotify.com/embed/track/51rfRCiUSvxXlCSCfIztBy?utm_source=generator"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy">
+            </iframe>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <script>
+      const letter = document.querySelector('#letter');
+      const openButton = document.querySelector('#openButton');
+
+      openButton.addEventListener('click', () => {
+        letter.classList.add('is-open');
+      });
+    </script>
+  </body>
+</html>
